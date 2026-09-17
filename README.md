@@ -29,8 +29,15 @@ Excel-writing library.
   <img src="docs/screenshots/excel02.jpeg" width="45%" alt="Duration / printer / plate / status columns">
 </p>
 
-Demo videos samples here:
-https://github.com/sebanumata/bambu-to-excel-auto-sync/issues
+Demo videos:
+
+Finished print, auto-synced to Excel:
+
+https://github.com/user-attachments/assets/ee432ea6-313f-41e5-bfe2-75f2ac2bcbff
+
+45 days / 327 prints of accumulated history:
+
+https://github.com/user-attachments/assets/52cc78d5-62bc-4916-8d9e-e15f4066f616
 
 ## Requirements
 
