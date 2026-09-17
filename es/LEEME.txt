@@ -1,10 +1,12 @@
 SINCRONIZADOR DE HISTORIAL DE IMPRESIONES - BAMBU LAB (by sebanumata)
 =======================================================
 
-Que hace: escucha tu impresora Bambu Lab por tu red WiFi local (no usa
-la nube ni tu cuenta de Bambu) y cada vez que termina o se cancela una
+Que hace: escucha tu(s) impresora(s) Bambu Lab por tu red WiFi local (no
+usa la nube ni tu cuenta de Bambu) y cada vez que termina o se cancela una
 impresion, agrega una fila al Excel "impresiones_3d.xlsx" con fecha,
-archivo, duracion, placa y si salio bien o se cancelo.
+archivo, duracion, impresora, placa y si salio bien o se cancelo.
+Funciona con una sola impresora o con varias a la vez, todas en el mismo
+Excel (ver "VARIAS IMPRESORAS" mas abajo).
 
 Requiere: Windows + Python 3 instalado (https://www.python.org/downloads/,
 al instalar marca la casilla "Add python.exe to PATH"). Tu impresora debe
@@ -51,6 +53,34 @@ bloqueado por Excel). No se pierde nada: el dato queda guardado igual y
 la fila va a aparecer sola la proxima vez que termine otra impresion Y
 el Excel este cerrado. Para ver los datos al toque, cerra el Excel antes
 de que termine la impresion, o volve a abrirlo despues.
+
+VARIAS IMPRESORAS
+--------------------
+Si tenes mas de una impresora Bambu Lab, podes cargarlas todas en el mismo
+config.json y van a compartir el mismo Excel (la columna "Impresora" te
+dice cual hizo cada trabajo). En vez del formato de una sola impresora,
+usa esta estructura con una entrada por impresora:
+
+{
+  "printers": [
+    {
+      "printer_ip": "IP de la impresora 1",
+      "access_code": "codigo de acceso 1",
+      "serial": "numero de serie 1",
+      "printer_label": "Nombre para el Excel, ej: A1 mini taller"
+    },
+    {
+      "printer_ip": "IP de la impresora 2",
+      "access_code": "codigo de acceso 2",
+      "serial": "numero de serie 2",
+      "printer_label": "Nombre para el Excel, ej: P1S living"
+    }
+  ]
+}
+
+Cada impresora se conecta y se rastrea por separado, asi que si una esta
+apagada o sin red, no afecta a las demas. Corre "install.bat" igual que
+siempre despues de guardar los cambios.
 
 SI ALGO FALLA
 --------------

@@ -1,11 +1,12 @@
 BAMBU LAB PRINT HISTORY SYNC (by sebanumata)
 =======================================================
 
-What it does: listens to your Bambu Lab printer over your local WiFi
+What it does: listens to your Bambu Lab printer(s) over your local WiFi
 network (no cloud, no Bambu account involved) and every time a print
 finishes or gets cancelled, it adds a row to "prints_log.xlsx" with the
-date, file name, duration, plate, and whether it succeeded or was
-cancelled.
+date, file name, duration, printer, plate, and whether it succeeded or
+was cancelled. Works with one printer or several at once, all logged to
+the same spreadsheet (see "MULTIPLE PRINTERS" below).
 
 Requires: Windows + Python 3 installed (https://www.python.org/downloads/,
 check "Add python.exe to PATH" during setup). Your printer needs "LAN
@@ -51,6 +52,34 @@ locks the file). Nothing gets lost: the data is saved anyway and the row
 will show up the next time another print finishes AND the spreadsheet is
 closed. To see it right away, close Excel before the print finishes, or
 just reopen it afterward.
+
+MULTIPLE PRINTERS
+--------------------
+If you have more than one Bambu Lab printer, you can list them all in the
+same config.json and they'll share the same spreadsheet (the "Printer"
+column tells you which one made each print). Instead of the single-printer
+format, use this structure with one entry per printer:
+
+{
+  "printers": [
+    {
+      "printer_ip": "printer 1's IP",
+      "access_code": "printer 1's access code",
+      "serial": "printer 1's serial number",
+      "printer_label": "Name for the spreadsheet, e.g. A1 mini workshop"
+    },
+    {
+      "printer_ip": "printer 2's IP",
+      "access_code": "printer 2's access code",
+      "serial": "printer 2's serial number",
+      "printer_label": "Name for the spreadsheet, e.g. P1S living room"
+    }
+  ]
+}
+
+Each printer connects and is tracked separately, so if one is off or
+offline, it doesn't affect the others. Run "install.bat" the same way as
+always after saving your changes.
 
 IF SOMETHING GOES WRONG
 --------------

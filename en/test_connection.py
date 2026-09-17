@@ -1,67 +1,66 @@
 import json
 import ssl
-import time
 import sys
+import time
 from pathlib import Path
 
 import paho.mqtt.client as mqtt
 
-CFG = json.load(open(Path(__file__).parent / "config.json", encoding="utf-8"))
-REPORT_TOPIC = f"device/{CFG['serial']}/report"
-REQUEST_TOPIC = f"device/{CFG['serial']}/request"
+from printer_config import load_printers
 
-got_message = {"flag": False}
+PRINTERS = load_printers(Path(__file__).parent / "config.json")
 
 
-def on_connect(client, userdata, flags, rc, properties=None):
-    print(f"on_connect rc={rc}")
-    if rc == 0:
-        client.subscribe(REPORT_TOPIC)
-        client.publish(REQUEST_TOPIC, json.dumps({"pushing": {"sequence_id": "0", "command": "pushall"}}))
-    else:
-        print("CONNECTION FAILED — check the IP / access code / that LAN mode is enabled")
+def test_one(cfg: dict) -> bool:
+    got = {"flag": False}
 
+    def on_connect(client, userdata, flags, rc, properties=None):
+        if rc == 0:
+            client.subscribe(f"device/{cfg['serial']}/report")
+            client.publish(f"device/{cfg['serial']}/request", json.dumps({
+                "pushing": {"sequence_id": "0", "command": "pushall"}
+            }))
+        else:
+            print(f"  [{cfg['printer_label']}] CONNECTION FAILED (rc={rc}) - check the access code / serial")
 
-def on_message(client, userdata, msg):
-    got_message["flag"] = True
+    def on_message(client, userdata, msg):
+        got["flag"] = True
+
+    client = mqtt.Client(client_id=f"bambu_test_{cfg['serial']}_{int(time.time())}", protocol=mqtt.MQTTv311)
+    client.username_pw_set("bblp", cfg["access_code"])
+    client.tls_set(cert_reqs=ssl.CERT_NONE)
+    client.tls_insecure_set(True)
+    client.on_connect = on_connect
+    client.on_message = on_message
+
+    print(f"Connecting to {cfg['printer_label']} ({cfg['printer_ip']}:8883) ...")
     try:
-        payload = json.loads(msg.payload.decode("utf-8"))
-    except Exception as e:
-        print("non-JSON payload:", e)
-        return
-    p = payload.get("print")
-    if p:
-        print("Current print status:")
-        print("  gcode_state:", p.get("gcode_state"))
-        print("  gcode_file:", p.get("gcode_file"))
-        print("  subtask_name:", p.get("subtask_name"))
-        print("  mc_percent:", p.get("mc_percent"))
-        print("  task_id:", p.get("task_id"))
-    else:
-        print("Message received with no 'print' block, keys:", list(payload.keys()))
+        client.connect(cfg["printer_ip"], 8883, keepalive=10)
+    except (TimeoutError, OSError) as e:
+        print(f"  Could not reach {cfg['printer_ip']}:8883 ({e}).")
+        return False
+
+    client.loop_start()
+    time.sleep(6)
+    client.loop_stop()
+    client.disconnect()
+
+    if not got["flag"]:
+        print(f"  [{cfg['printer_label']}] No response in 6s. Check that it's on, on the same network,")
+        print("  and that 'LAN Only Mode' is enabled under Settings > Network.")
+        return False
+
+    print(f"  [{cfg['printer_label']}] OK")
+    return True
 
 
-client = mqtt.Client(client_id=f"bambu_test_{int(time.time())}", protocol=mqtt.MQTTv311)
-client.username_pw_set("bblp", CFG["access_code"])
-client.tls_set(cert_reqs=ssl.CERT_NONE)
-client.tls_insecure_set(True)
-client.on_connect = on_connect
-client.on_message = on_message
+results = [test_one(cfg) for cfg in PRINTERS]
 
-print(f"Connecting to {CFG['printer_ip']}:8883 ...")
-try:
-    client.connect(CFG["printer_ip"], 8883, keepalive=10)
-except (TimeoutError, OSError) as e:
-    print(f"Could not reach {CFG['printer_ip']}:8883 ({e}).")
-    print("Check that the printer is on and connected to WiFi, and that the IP in config.json is correct.")
+print()
+if not any(results):
+    print("No printer responded. Check the IP / access code / serial number in config.json.")
     sys.exit(1)
-client.loop_start()
-time.sleep(8)
-client.loop_stop()
-client.disconnect()
-
-if not got_message["flag"]:
-    print("NO message received in 8s. Check that the printer is powered on,")
-    print("on the same network, and that 'LAN Only Mode' is enabled under Settings > Network.")
-    sys.exit(1)
-print("OK: connection and data verified.")
+if not all(results):
+    print("At least one printer connected, but other(s) failed - you can check those later if needed.")
+else:
+    print(f"OK: all {len(results)} configured printer(s) responded correctly.")

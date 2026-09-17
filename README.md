@@ -7,7 +7,8 @@ mode) and, every time a print finishes, is cancelled, or fails, automatically
 adds a row to an Excel history file. No cloud, no Bambu account required.
 It runs locally on your PC, requiring no manual intervention.
 Upon completion of a 3D print, the print job is automatically added as a new row in Excel.
-Free and easy to use.
+Free and easy to use. Works with a single printer or a whole farm of Bambu Lab printers,
+all logged to the same spreadsheet.
 
 Registra tu historial de impresiones 3D de forma automática en un excel, sin que toques nada.
 Podes dejarlo cerrado sin abrirlo por meses, e igual va a ir registrando impresión tras impresión.
@@ -16,7 +17,8 @@ impresora BambuLab y agrega automáticamente una fila a un Excel de
 historial cada vez que una impresión termina, se cancela o falla. No
 depende de la nube ni de tu cuenta de Bambu.
 Corre en tu pc de forma local.
-Gratis y fácil de usar.
+Gratis y fácil de usar. Funciona con una sola impresora o con toda una farm de
+impresoras Bambu Lab, todas registradas en el mismo Excel.
 
 ## Choose your language / Elegí tu idioma
 
