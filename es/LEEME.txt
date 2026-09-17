@@ -1,0 +1,63 @@
+SINCRONIZADOR DE HISTORIAL DE IMPRESIONES - BAMBU LAB (by sebanumata)
+=======================================================
+
+Que hace: escucha tu impresora Bambu Lab por tu red WiFi local (no usa
+la nube ni tu cuenta de Bambu) y cada vez que termina o se cancela una
+impresion, agrega una fila al Excel "impresiones_3d.xlsx" con fecha,
+archivo, duracion, placa y si salio bien o se cancelo.
+
+Requiere: Windows + Python 3 instalado (https://www.python.org/downloads/,
+al instalar marca la casilla "Add python.exe to PATH"). Tu impresora debe
+tener el "Modo LAN" / acceso local activado (viene activado por defecto
+en la mayoria de los A1 / A1 mini / P1P).
+
+PASOS PARA INSTALAR
+--------------------
+1) Copia toda esta carpeta a donde quieras en tu PC (Escritorio, Documentos, etc).
+
+2) Anda a la pantalla de tu impresora: Configuracion (rueda) -> Red / WLAN.
+   Ahi vas a ver:
+     - La IP de la impresora (ej: 192.168.0.15)
+     - El codigo de acceso (a veces hay que tocar un icono de "ojo" para verlo)
+     - El numero de serie (a veces esta en Configuracion -> General -> Device,
+       o en la etiqueta pegada en la impresora)
+
+3) Abri el archivo "config.json" con el Bloc de notas y reemplaza:
+     "printer_ip": "CAMBIAR_IP"                 -> tu IP
+     "access_code": "CAMBIAR_CODIGO_DE_ACCESO"  -> tu codigo de acceso
+     "serial": "CAMBIAR_NUMERO_DE_SERIE"        -> tu numero de serie
+     "printer_label": "Mi impresora (A1 mini)"  -> como quieras que
+                                                    aparezca en el Excel
+   Guarda el archivo.
+
+4) Hace doble clic en "install.bat". Va a instalar lo necesario, probar
+   la conexion con tu impresora, y dejarlo funcionando solo (arranca
+   automaticamente cada vez que prendas la PC, sin que tengas que hacer
+   nada mas).
+
+5) Abri "impresiones_3d.xlsx" - va a estar vacio al principio y se va
+   llenando solo con cada impresion que hagas de ahi en adelante.
+
+IMPORTANTE: el nombre que aparece en la columna "Archivo" es el que tenga
+el proyecto/plancha en Bambu Studio en el momento de mandarlo a imprimir.
+Si no le pusiste nombre antes de enviarlo, va a aparecer una descripcion
+generica del perfil de impresion (ej. "0.28mm layer, 1 walls..."). Para
+que salga prolijo, nombra el proyecto en Bambu Studio antes de imprimir.
+Si ya salio con nombre generico, lo podes editar a mano en el Excel.
+
+IMPORTANTE: si tenes el Excel abierto justo cuando termina una impresion,
+Windows no deja que el programa lo actualice en ese momento (queda
+bloqueado por Excel). No se pierde nada: el dato queda guardado igual y
+la fila va a aparecer sola la proxima vez que termine otra impresion Y
+el Excel este cerrado. Para ver los datos al toque, cerra el Excel antes
+de que termine la impresion, o volve a abrirlo despues.
+
+SI ALGO FALLA
+--------------
+- "No se pudo conectar": revisa que la impresora este prendida, conectada
+  al WiFi, y que la IP/codigo/serie en config.json sean los correctos
+  (el codigo de acceso puede cambiar si reconectas la impresora al WiFi).
+- Revisa el archivo "bambu_sync.log" (aparece despues de la instalacion)
+  para ver el detalle de que esta pasando.
+- Si queres desinstalar el arranque automatico, borra este archivo:
+  %APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\bambu_sync_launcher.vbs
