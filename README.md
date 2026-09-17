@@ -29,9 +29,8 @@ Excel-writing library.
   <img src="docs/screenshots/excel02.jpeg" width="45%" alt="Duration / printer / plate / status columns">
 </p>
 
-Demo videos (click to play):
-- [▶ video01.mp4](docs/videos/video01.mp4) — printer finishing a print, then the row showing up in Excel
-- [▶ video02.mp4](docs/videos/video02.mp4) — scrolling through the accumulated history
+Demo videos samples here:
+https://github.com/sebanumata/bambu-to-excel-auto-sync/issues
 
 ## Requirements
 
