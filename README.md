@@ -22,6 +22,17 @@ Both folders contain the same tool (identical logic, translated
 strings/labels): a Windows one-click installer, an MQTT client, and an
 Excel-writing library.
 
+## Screenshots / Capturas
+
+<p>
+  <img src="docs/screenshots/excel01.jpeg" width="45%" alt="Print history rows in the spreadsheet">
+  <img src="docs/screenshots/excel02.jpeg" width="45%" alt="Duration / printer / plate / status columns">
+</p>
+
+Demo videos (click to play):
+- [▶ video01.mp4](docs/videos/video01.mp4) — printer finishing a print, then the row showing up in Excel
+- [▶ video02.mp4](docs/videos/video02.mp4) — scrolling through the accumulated history
+
 ## Requirements
 
 - Windows + Python 3 (installer handles the pip dependencies)
