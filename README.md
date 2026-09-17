@@ -1,17 +1,22 @@
 # bambu-to-excel-auto-sync
 
+Automatically log your 3D printing history in an Excel spreadsheet—without lifting a finger.
+You can leave the file closed for months, and it will still record every single print.
 Background service that listens to a Bambu Lab printer's local MQTT (LAN
 mode) and, every time a print finishes, is cancelled, or fails, automatically
 adds a row to an Excel history file. No cloud, no Bambu account required.
 It runs locally on your PC, requiring no manual intervention.
 Upon completion of a 3D print, the print job is automatically added as a new row in Excel.
+Free and easy to use.
 
-Servicio en segundo plano que escucha el MQTT local (modo LAN) de una
-impresora Bambu Lab y agrega automáticamente una fila a un Excel de
+Registra tu historial de impresiones 3D de forma automática en un excel, sin que toques nada.
+Podes dejarlo cerrado sin abrirlo por meses, e igual va a ir registrando impresión tras impresión.
+Funciona como servicio en segundo plano que escucha el MQTT local (modo LAN) de una
+impresora BambuLab y agrega automáticamente una fila a un Excel de
 historial cada vez que una impresión termina, se cancela o falla. No
 depende de la nube ni de tu cuenta de Bambu.
 Corre en tu pc de forma local, sin que toques nada.
-Automáticamente al finalizar una impresión 3D, se agrega esa impresión a una nueva fila en excel.
+Gratis y fácil de usar.
 
 ## Choose your language / Elegí tu idioma
 
