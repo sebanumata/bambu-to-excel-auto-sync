@@ -3,11 +3,15 @@
 Background service that listens to a Bambu Lab printer's local MQTT (LAN
 mode) and, every time a print finishes, is cancelled, or fails, automatically
 adds a row to an Excel history file. No cloud, no Bambu account required.
+It runs locally on your PC, requiring no manual intervention.
+Upon completion of a 3D print, the print job is automatically added as a new row in Excel.
 
 Servicio en segundo plano que escucha el MQTT local (modo LAN) de una
 impresora Bambu Lab y agrega automáticamente una fila a un Excel de
 historial cada vez que una impresión termina, se cancela o falla. No
 depende de la nube ni de tu cuenta de Bambu.
+Corre en tu pc de forma local, sin que toques nada.
+Automáticamente al finalizar una impresión 3D, se agrega esa impresión a una nueva fila en excel.
 
 ## Choose your language / Elegí tu idioma
 
