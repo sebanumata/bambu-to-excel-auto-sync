@@ -17,8 +17,8 @@ impresora BambuLab y agrega automáticamente una fila a un Excel de
 historial cada vez que una impresión termina, se cancela o falla. No
 depende de la nube ni de tu cuenta de Bambu.
 Corre en tu pc de forma local.
-Gratis y fácil de usar. Funciona con una sola impresora o con toda una farm de
-impresoras Bambu Lab, todas registradas en el mismo Excel.
+Gratis y fácil de usar.
+Funciona con una sola impresora o con varias impresoras BambuLab, todas registradas en el mismo Excel.
 
 ## Choose your language / Elegí tu idioma
 
